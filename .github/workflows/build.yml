@@ -19,7 +19,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: package
-          path: mysql.odbc.8.0.26.nupkg
+          path: mysql.odbc.*.nupkg
   test:
     name: Test mysql.odbc
     needs: pack
