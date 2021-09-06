@@ -1,18 +1,32 @@
-# This is a basic workflow to help you get started with Actions
+# Build and test mysql package
 
-name: Build mysql.odbc package
+name: Build and test mysql.odbc package
 
 on: push
 
 jobs:
-  test:
+  pack:
     runs-on: windows-latest
     steps:
-      -
-        name: Checkout
+      - name: Checkout
         uses: actions/checkout@v2
-      -
-        name: Choco help
+      - name: Choco pack
         uses: crazy-max/ghaction-chocolatey@v1
         with:
           args: pack
+      - name: Upload package
+        uses: actions/upload-artifact@v2
+        with:
+          name: package
+          path: mysql.odbc.8.0.26.nupkg
+  test:
+    runs-on: windows-latest
+    steps:
+      - name: Download package
+        uses: actions/download-artifact@v2
+        with:
+          name: package
+      - name: test package
+        uses: crazy-max/ghaction-chocolatey@v1
+        with:
+          args: install mysql.odbc -dv -s .
