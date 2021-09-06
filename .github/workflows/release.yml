@@ -12,7 +12,19 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Choco help
+      - name: Choco pack
         uses: crazy-max/ghaction-chocolatey@v1
         with:
           args: pack
+      - name: Save package file name as env var
+        run: |
+          ${Env:GITHUB_ENV.PACKAGE_FILENAME} = Get-ChildItem *.nupkg -Name
+      - name: Choco set API key
+        uses: crazy-max/ghaction-chocolatey@v1
+        with:
+          args: apikey --key ${{ env.CHOCOLATEY_API_KEY }} --source https://push.chocolatey.org/
+      - name: Choco push package
+        uses: crazy-max/ghaction-chocolatey@v1
+        with:
+          args: push ${Env:GITHUB_ENV.PACKAGE_FILENAME} --source https://push.chocolatey.org/
+      
