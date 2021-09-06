@@ -21,8 +21,10 @@ jobs:
           ${Env:GITHUB_ENV.PACKAGE_FILENAME} = Get-ChildItem *.nupkg -Name
       - name: Choco set API key
         uses: crazy-max/ghaction-chocolatey@v1
+        env:
+          CHOCOLATEY_API_KEY: ${{ secrets.CHOCOLATEY_API_KEY }}
         with:
-          args: apikey --key ${{ env.CHOCOLATEY_API_KEY }} --source https://push.chocolatey.org/
+          args: apikey --key "$env:CHOCOLATEY_API_KEY" --source https://push.chocolatey.org/
       - name: Choco push package
         uses: crazy-max/ghaction-chocolatey@v1
         with:
