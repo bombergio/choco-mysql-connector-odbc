@@ -6,6 +6,7 @@ on: push
 
 jobs:
   pack:
+    name: Package mysql.odbc
     runs-on: windows-latest
     steps:
       - name: Checkout
@@ -20,6 +21,8 @@ jobs:
           name: package
           path: mysql.odbc.8.0.26.nupkg
   test:
+    name: Test mysql.odbc
+    needs: pack
     runs-on: windows-latest
     steps:
       - name: Download package
