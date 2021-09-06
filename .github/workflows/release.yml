@@ -18,7 +18,7 @@ jobs:
           args: pack
       - name: Save package file name as env var
         run: |
-          ${Env:GITHUB_ENV.PACKAGE_FILENAME} = Get-ChildItem *.nupkg -Name
+          echo "package_name=$(Get-ChildItem *.nupkg -Name)" >> $Env:GITHUB_ENV
       - name: Choco set API key
         uses: crazy-max/ghaction-chocolatey@v1
         env:
@@ -28,5 +28,5 @@ jobs:
       - name: Choco push package
         uses: crazy-max/ghaction-chocolatey@v1
         with:
-          args: push ${Env:GITHUB_ENV.PACKAGE_FILENAME} --source https://push.chocolatey.org/
+          args: push ${Env:GITHUB_ENV.package_name} --source https://push.chocolatey.org/
       
