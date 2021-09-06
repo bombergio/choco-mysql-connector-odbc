@@ -1,6 +1,6 @@
 # Build and release mysql package
 
-name: Build and release mysql.odbc package
+name: Build and release mysql.odbc package to Chocolatey
 
 on:
   pull_request:
