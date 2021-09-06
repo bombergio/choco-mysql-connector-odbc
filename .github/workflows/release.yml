@@ -1,4 +1,4 @@
-# Build and release mysql package
+# Build and release mysql package to Chocolatey
 
 name: Build and release mysql.odbc package to Chocolatey
 
