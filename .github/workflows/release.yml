@@ -1,0 +1,31 @@
+name: Build and release mysql.odbc package to Chocolatey
+
+on:
+  pull_request:
+    types: [ closed ]
+
+jobs:
+  pack:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Choco pack
+        uses: crazy-max/ghaction-chocolatey@v1
+        with:
+          args: pack
+      - name: Save package file name as env var
+        run: |
+          chcp 65001 #set code page to utf-8
+          echo ("PACKAGE_NAME=" + $(Get-ChildItem *.nupkg -Name)) >> $env:GITHUB_ENV
+      - name: Choco set API key
+        uses: crazy-max/ghaction-chocolatey@v1
+        env:
+          CHOCOLATEY_API_KEY: ${{ secrets.CHOCOLATEY_API_KEY }}
+        with:
+          args: apikey --key "${{ env.CHOCOLATEY_API_KEY }}" --source https://push.chocolatey.org/
+      - name: Choco push package
+        uses: crazy-max/ghaction-chocolatey@v1
+        with:
+          args: push "${{ env.PACKAGE_NAME }}" --source https://push.chocolatey.org/
+      
