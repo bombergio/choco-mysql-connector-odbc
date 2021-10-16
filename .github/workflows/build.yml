@@ -1,5 +1,3 @@
-# Build and test mysql package
-
 name: Build and test mysql.odbc package
 
 on: push

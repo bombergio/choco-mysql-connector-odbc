@@ -1,5 +1,3 @@
-# Build and release mysql package 
-
 name: Build and release mysql.odbc package to Chocolatey
 
 on:
@@ -17,8 +15,7 @@ jobs:
         with:
           args: pack
       - name: Save package file name as env var
-        run: |
-          echo "package_name=$(Get-ChildItem *.nupkg -Name)" >> $Env:GITHUB_ENV
+        run: echo "::set-env name=package_name::$(Get-ChildItem *.nupkg -Name)"
       - name: Choco set API key
         uses: crazy-max/ghaction-chocolatey@v1
         env:
@@ -28,5 +25,5 @@ jobs:
       - name: Choco push package
         uses: crazy-max/ghaction-chocolatey@v1
         with:
-          args: push ${Env:GITHUB_ENV.package_name} --source https://push.chocolatey.org/
+          args: push ${env:package_name} --source https://push.chocolatey.org/
       
