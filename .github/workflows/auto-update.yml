@@ -1,0 +1,14 @@
+name: Automatically create PR on new version
+
+on: 
+  schedule:
+    - cron:  '0 8 * * *'
+
+jobs:
+  check_update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check latest MySQL ODBC driver version
+        run: "LATEST_VERSION=$(curl -s https://dev.mysql.com/downloads/connector/odbc/\?tpl\=platform\&os\=3\&osva\= | grep -oP '<td class=\"col3\">\K.*' | uniq | sed 's/^ *//g' | cut -d'<' -f1)" >> $GITHUB_ENV
+      - run: Print latest version
+        run: echo $LATEST_VERSION
