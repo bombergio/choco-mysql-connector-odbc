@@ -9,8 +9,21 @@ jobs:
   check_update:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v2
       - name: Check latest MySQL ODBC driver version
         run: |
-          "LATEST_VERSION=$(curl -s 'https://dev.mysql.com/downloads/connector/odbc/' | grep -oP '<td class=\"col3\">\K.*' | uniq | sed 's/^ *//g' | cut -d'<' -f1)" >> $GITHUB_ENV
+          echo "LATEST_VERSION=$(curl -s 'https://dev.mysql.com/downloads/connector/odbc/' | grep -oP '<td class=\"col3\">\K.*' | uniq | sed 's/^ *//g' | cut -d'<' -f1)" >> $GITHUB_ENV
       - name: Print latest version
         run: echo $LATEST_VERSION
+      - name: Find Tag
+        id: tagger
+        uses: jimschubert/query-tag-action@v1
+        with:
+          include: 'v*'
+          exclude: '*-rc*'
+          commit-ish: 'HEAD~'
+      - name: Show Tag
+        id: display
+        run: |
+          echo 'Output from Find Tag: ${{steps.tagger.outputs.tag}}'
