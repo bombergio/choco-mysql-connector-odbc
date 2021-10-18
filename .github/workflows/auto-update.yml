@@ -11,6 +11,6 @@ jobs:
     steps:
       - name: Check latest MySQL ODBC driver version
         run: |
-          "LATEST_VERSION=$(curl -s https://dev.mysql.com/downloads/connector/odbc/\?tpl\=platform\&os\=3\&osva\= | grep -oP '<td class=\"col3\">\K.*' | uniq | sed 's/^ *//g' | cut -d'<' -f1)" >> $GITHUB_ENV
+          "LATEST_VERSION=$(curl -s 'https://dev.mysql.com/downloads/connector/odbc/' | grep -oP '<td class=\"col3\">\K.*' | uniq | sed 's/^ *//g' | cut -d'<' -f1)" >> $GITHUB_ENV
       - name: Print latest version
         run: echo $LATEST_VERSION
