@@ -14,9 +14,8 @@ jobs:
         run: |
           echo "LATEST_VERSION=$(curl -s 'https://dev.mysql.com/downloads/connector/odbc/' | grep -oP '<td class=\"col3\">\K.*' | uniq | sed 's/^ *//g' | cut -d'<' -f1)" >> $GITHUB_ENV
           echo "LATEST_MINOR_VERSION=$(curl -s 'https://dev.mysql.com/downloads/connector/odbc/' | grep -oP '<td class=\"col3\">\K.*' | uniq | sed 's/^ *//g' | cut -d'<' -f1 | cut -d'.' -f-2)" >> $GITHUB_ENV
-          echo "URL=https://cdn.mysql.com//Downloads/Connector-ODBC/${{ env.LATEST_MINOR_VERSION }}/mysql-connector-odbc" >> $GITHUB_ENV
-      - name: Print latest version
-        run: echo $LATEST_VERSION
+      - name: Create URL
+        run: echo "URL=https://cdn.mysql.com//Downloads/Connector-ODBC/${{ env.LATEST_MINOR_VERSION }}/mysql-connector-odbc" >> $GITHUB_ENV
       - name: Calculate SHA256
         run: |
           echo "WIN32SHA=$(curl -s ${URL}-${LATEST_VERSION}-win32.msi | sha256sum | cut -d' ' -f1)" >> $GITHUB_ENV
