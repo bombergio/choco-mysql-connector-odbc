@@ -2,7 +2,10 @@ name: Build and release mysql.odbc package to Chocolatey
 
 on:
   pull_request:
-    types: [ closed ]
+    brances:
+      - master
+    types:
+      - closed
 
 jobs:
   pack:
@@ -10,6 +13,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+      - name: Get branch name
+        id: branch-name
+        uses: tj-actions/branch-names@v4.9
       - name: Choco pack
         uses: crazy-max/ghaction-chocolatey@v1
         with:
@@ -28,4 +34,16 @@ jobs:
         uses: crazy-max/ghaction-chocolatey@v1
         with:
           args: push "${{ env.PACKAGE_NAME }}" --source https://push.chocolatey.org/
-      
+      - name: Bump version and push tag
+        id: tag_version
+        uses: mathieudutour/github-tag-action@v6.0
+        with:
+          github_token: ${{ secrets.PAT }}
+          tag_prefix: ''
+          custom_tag: ${{ steps.branch-name.outputs.current_branch }}
+      - name: Create a GitHub release
+        uses: ncipollo/release-action@v1
+        with:
+          tag: ${{ steps.tag_version.outputs.new_tag }}
+          name: Release ${{ steps.tag_version.outputs.new_tag }}
+          body: ${{ steps.tag_version.outputs.changelog }}
