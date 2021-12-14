@@ -25,6 +25,7 @@ jobs:
           sed -i "s|\$url64 .*|\$url64      = '${{ env.URL }}-${{ env.LATEST_VERSION }}-winx64.msi'|g" tools/chocolateyinstall.ps1
           sed -i "s/ checksum .*/ checksum      = '${{ env.WIN32SHA }}'/g" tools/chocolateyinstall.ps1
           sed -i "s/ checksum64 .*/ checksum64    = '${{ env.WIN64SHA }}'/g" tools/chocolateyinstall.ps1
+          sed -i "s|version>.*<|version>${{ env.LATEST_VERSION }}<|g" mysql-odbc.nuspec
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v3
         with:
