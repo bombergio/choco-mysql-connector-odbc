@@ -19,7 +19,7 @@ jobs:
       - name: Calculate SHA256
         run: |
           echo "WIN32SHA=$(curl -s ${URL}-${LATEST_VERSION}-win32.msi | sha256sum | cut -d' ' -f1)" >> $GITHUB_ENV
-          echo "WINX64SHA=$(curl -s ${URL}-${LATEST_VERSION}-winx64.msi | sha256sum | cut -d' ' -f1)" >> $GITHUB_ENV
+          echo "WIN64SHA=$(curl -s ${URL}-${LATEST_VERSION}-winx64.msi | sha256sum | cut -d' ' -f1)" >> $GITHUB_ENV
       - name: Update chocolateyinstall.ps1 file
         run: |
           sed -i "s|\$url .*|\$url        = '${{ env.URL }}-${{ env.LATEST_VERSION }}-win32.msi'|g" tools/chocolateyinstall.ps1
