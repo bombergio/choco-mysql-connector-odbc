@@ -13,7 +13,7 @@ jobs:
       - name: Check latest MySQL ODBC driver version
         run: |
           echo "LATEST_VERSION=$(curl -s 'https://dev.mysql.com/downloads/connector/odbc/' | grep -oP '<td class=\"col3\">\K.*' | uniq | sed 's/^ *//g' | cut -d'<' -f1)" >> $GITHUB_ENV
-          echo "URL=https://cdn.mysql.com//Downloads/Connector-ODBC/$(echo ${LATEST_VERSION} | cut -d'.' -f-2)/mysql-connector-odbc" >> $GITHUB_ENV
+          echo "URL=https://cdn.mysql.com//Downloads/Connector-ODBC/$(echo ${{ env.LATEST_VERSION }} | cut -d'.' -f-2)/mysql-connector-odbc" >> $GITHUB_ENV
       - name: Print latest version
         run: echo $LATEST_VERSION
       - name: Calculate SHA256
@@ -22,8 +22,8 @@ jobs:
           echo "WINX64SHA=$(curl -s ${URL}-${LATEST_VERSION}-winx64.msi | sha256sum | cut -d' ' -f1)" >> $GITHUB_ENV
       - name: Update chocolateyinstall.ps1 file
         run: |
-          sed -i "s/$url.*/$url        = '${{ env.URL }}-${{ env.LATEST_VERSION }}-win32.msi'/g" tools/chocolateyinstall.ps1
-          sed -i "s/$url64.*/$url64      = '${{ env.URL }}-${{ env.LATEST_VERSION }}-winx64.msi'/g" tools/chocolateyinstall.ps1
+          sed -i "s|\$url .*|\$url        = '${{ env.URL }}-${{ env.LATEST_VERSION }}-win32.msi'|g" tools/chocolateyinstall.ps1
+          sed -i "s|\$url64 .*|\$url64      = '${{ env.URL }}-${{ env.LATEST_VERSION }}-winx64.msi'|g" tools/chocolateyinstall.ps1
           sed -i "s/ checksum .*/ checksum      = '${{ env.WIN32SHA }}'/g" tools/chocolateyinstall.ps1
           sed -i "s/ checksum64 .*/ checksum64    = '${{ env.WIN64SHA }}'/g" tools/chocolateyinstall.ps1
       - name: Create Pull Request
