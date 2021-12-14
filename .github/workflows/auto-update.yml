@@ -1,8 +1,8 @@
 name: Automatically create PR on a new version
 
-on:
-  schedule:
-    - cron:  '0 8 * * *'
+on: workflow_dispatch
+  # schedule:
+    # - cron:  '0 8 * * *'
 
 jobs:
   check_update:
@@ -34,6 +34,7 @@ jobs:
           committer: GitHub <noreply@github.com>
           author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
           signoff: false
+          base: master
           branch: ${{ env.LATEST_VERSION }}
           delete-branch: true
           title: MySQL ODBC ${{ env.LATEST_VERSION }}
