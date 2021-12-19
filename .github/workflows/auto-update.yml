@@ -26,19 +26,18 @@ jobs:
           sed -i "s/ checksum .*/ checksum      = '${{ env.WIN32SHA }}'/g" tools/chocolateyinstall.ps1
           sed -i "s/ checksum64 .*/ checksum64    = '${{ env.WIN64SHA }}'/g" tools/chocolateyinstall.ps1
           sed -i "s|version>.*<|version>${{ env.LATEST_VERSION }}<|g" mysql-odbc.nuspec
-      - run: git status
-      # - name: Create Pull Request
-      #   uses: peter-evans/create-pull-request@v3
-      #   with:
-      #     token: ${{ secrets.PAT }}
-      #     commit-message: Updating MySQL ODBC driver to ${{ env.LATEST_VERSION }}
-      #     committer: GitHub <noreply@github.com>
-      #     author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
-      #     signoff: false
-      #     base: master
-      #     branch: ${{ env.LATEST_VERSION }}
-      #     delete-branch: true
-      #     title: MySQL ODBC ${{ env.LATEST_VERSION }}
-      #     body: 'Updated MySQL ODBC driver to ${{ env.LATEST_VERSION }}'
-      #     labels: |
-      #       automated pr
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v3
+        with:
+          token: ${{ secrets.PAT }}
+          commit-message: Updating MySQL ODBC driver to ${{ env.LATEST_VERSION }}
+          committer: GitHub <noreply@github.com>
+          author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
+          signoff: false
+          base: master
+          branch: update-to-${{ env.LATEST_VERSION }}
+          delete-branch: true
+          title: MySQL ODBC ${{ env.LATEST_VERSION }}
+          body: 'Updated MySQL ODBC driver to ${{ env.LATEST_VERSION }}'
+          labels: |
+            automated pr
