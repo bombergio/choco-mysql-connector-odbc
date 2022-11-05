@@ -8,7 +8,7 @@ jobs:
   check_update:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Check latest MySQL ODBC driver version
         run: |
           echo "LATEST_VERSION=$(curl -s 'https://dev.mysql.com/downloads/connector/odbc/' | grep -oP '<td class=\"col3\">\K.*' | uniq | sed 's/^ *//g' | cut -d'<' -f1)" >> $GITHUB_ENV
@@ -27,7 +27,7 @@ jobs:
           sed -i "s/ checksum64 .*/ checksum64    = '${{ env.WIN64SHA }}'/g" tools/chocolateyinstall.ps1
           sed -i "s|version>.*<|version>${{ env.LATEST_VERSION }}<|g" mysql-odbc.nuspec
       - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v3
+        uses: peter-evans/create-pull-request@v4
         with:
           token: ${{ secrets.PAT }}
           commit-message: Updating MySQL ODBC driver to ${{ env.LATEST_VERSION }}
