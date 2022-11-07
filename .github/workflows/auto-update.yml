@@ -16,10 +16,10 @@ jobs:
           echo "LATEST_MINOR_VERSION=$(curl -s 'https://dev.mysql.com/downloads/connector/odbc/' | grep -oP '<td class=\"col3\">\K.*' | uniq | sed 's/^ *//g' | cut -d'<' -f1 | cut -d'.' -f-2)" >> $GITHUB_ENV
       - name: Get version in the repo
         id: getversion
-        uses: mavrosxristoforos/get-xml-info@1.0
+        uses: mavrosxristoforos/get-xml-info@1.1.1
         with:
           xml-file: 'mysql-odbc.nuspec'
-          xpath: '//package/metadata/version'
+          xpath: '/*[local-name()='package']/*[local-name()='metadata']/*[local-name()='version']'
       - name: Create URL
         if: ${{ steps.getversion.outputs.info }} != ${{ env.LATEST_VERSION }}
         run: echo "URL=https://cdn.mysql.com//Downloads/Connector-ODBC/${{ env.LATEST_MINOR_VERSION }}/mysql-connector-odbc" >> $GITHUB_ENV
