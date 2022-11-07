@@ -19,7 +19,7 @@ jobs:
         uses: mavrosxristoforos/get-xml-info@1.1.1
         with:
           xml-file: 'mysql-odbc.nuspec'
-          xpath: '/*[local-name()='package']/*[local-name()='metadata']/*[local-name()='version']'
+          xpath: "/*[local-name()='package']/*[local-name()='metadata']/*[local-name()='version']"
       - name: Create URL
         if: ${{ steps.getversion.outputs.info }} != ${{ env.LATEST_VERSION }}
         run: echo "URL=https://cdn.mysql.com//Downloads/Connector-ODBC/${{ env.LATEST_MINOR_VERSION }}/mysql-connector-odbc" >> $GITHUB_ENV
