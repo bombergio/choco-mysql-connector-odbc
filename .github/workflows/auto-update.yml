@@ -21,15 +21,15 @@ jobs:
           xml-file: 'mysql-odbc.nuspec'
           xpath: "/*[local-name()='package']/*[local-name()='metadata']/*[local-name()='version']"
       - name: Create URL
-        if: ${{ steps.getversion.outputs.info }} != ${{ env.LATEST_VERSION }}
+        if: steps.getversion.outputs.info != env.LATEST_VERSION
         run: echo "URL=https://cdn.mysql.com//Downloads/Connector-ODBC/${{ env.LATEST_MINOR_VERSION }}/mysql-connector-odbc" >> $GITHUB_ENV
       - name: Calculate SHA256
-        if: ${{ steps.getversion.outputs.info }} != ${{ env.LATEST_VERSION }}
+        if: steps.getversion.outputs.info != env.LATEST_VERSION
         run: |
           echo "WIN32SHA=$(curl -s ${URL}-${LATEST_VERSION}-win32.msi | sha256sum | cut -d' ' -f1)" >> $GITHUB_ENV
           echo "WIN64SHA=$(curl -s ${URL}-${LATEST_VERSION}-winx64.msi | sha256sum | cut -d' ' -f1)" >> $GITHUB_ENV
       - name: Update chocolateyinstall.ps1 file
-        if: ${{ steps.getversion.outputs.info }} != ${{ env.LATEST_VERSION }}
+        if: steps.getversion.outputs.info != env.LATEST_VERSION
         run: |
           sed -i "s|\$url .*|\$url        = '${{ env.URL }}-${{ env.LATEST_VERSION }}-win32.msi'|g" tools/chocolateyinstall.ps1
           sed -i "s|\$url64 .*|\$url64      = '${{ env.URL }}-${{ env.LATEST_VERSION }}-winx64.msi'|g" tools/chocolateyinstall.ps1
@@ -37,7 +37,7 @@ jobs:
           sed -i "s/ checksum64 .*/ checksum64    = '${{ env.WIN64SHA }}'/g" tools/chocolateyinstall.ps1
           sed -i "s|version>.*<|version>${{ env.LATEST_VERSION }}<|g" mysql-odbc.nuspec
       - name: Create Pull Request
-        if: ${{ steps.getversion.outputs.info }} != ${{ env.LATEST_VERSION }}
+        if: steps.getversion.outputs.info != env.LATEST_VERSION
         uses: peter-evans/create-pull-request@v4
         with:
           token: ${{ secrets.PAT }}
