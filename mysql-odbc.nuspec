@@ -9,7 +9,7 @@
     <authors>Oracle</authors>
     <projectUrl>https://dev.mysql.com/downloads/connector/odbc</projectUrl>
     <iconUrl>https://cdn.jsdelivr.net/gh/bombergio/choco-mysql-connector-odbc/Mysql.png</iconUrl>
-    <copyright>2019 Oracle</copyright>
+    <copyright>2023 Oracle</copyright>
     <licenseUrl>https://downloads.mysql.com/docs/licenses/connector-odbc-gpl-en.pdf</licenseUrl>
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
     <docsUrl>https://dev.mysql.com/doc/connector-odbc/en/index.html</docsUrl>

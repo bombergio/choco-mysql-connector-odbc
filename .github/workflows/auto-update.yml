@@ -30,10 +30,10 @@ jobs:
       - name: Update chocolateyinstall.ps1 file
         if: steps.getversion.outputs.info != env.LATEST_VERSION
         run: |
-          sed -i "s|\$url .*|\$url        = '${{ env.URL }}-${{ env.LATEST_VERSION }}-win32.msi'|g" tools/chocolateyinstall.ps1
-          sed -i "s|\$url64 .*|\$url64      = '${{ env.URL }}-${{ env.LATEST_VERSION }}-winx64.msi'|g" tools/chocolateyinstall.ps1
-          sed -i "s/ checksum .*/ checksum      = '${{ env.WIN32SHA }}'/g" tools/chocolateyinstall.ps1
-          sed -i "s/ checksum64 .*/ checksum64    = '${{ env.WIN64SHA }}'/g" tools/chocolateyinstall.ps1
+          sed -i "s|\$url .*|\$url = '${{ env.URL }}-${{ env.LATEST_VERSION }}-win32.msi'|g" tools/chocolateyinstall.ps1
+          sed -i "s|\$url64 .*|\$url64 = '${{ env.URL }}-${{ env.LATEST_VERSION }}-winx64.msi'|g" tools/chocolateyinstall.ps1
+          sed -i "s/ checksum .*/ checksum = '${{ env.WIN32SHA }}'/g" tools/chocolateyinstall.ps1
+          sed -i "s/ checksum64 .*/ checksum64 = '${{ env.WIN64SHA }}'/g" tools/chocolateyinstall.ps1
           sed -i "s|version>.*<|version>${{ env.LATEST_VERSION }}<|g" mysql-odbc.nuspec
       - name: Create Pull Request
         if: steps.getversion.outputs.info != env.LATEST_VERSION
@@ -45,7 +45,7 @@ jobs:
           author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
           signoff: false
           base: master
-          branch: update-to-${{ env.LATEST_VERSION }}
+          branch: ${{ env.LATEST_VERSION }}
           delete-branch: true
           title: MySQL ODBC ${{ env.LATEST_VERSION }}
           body: 'Updated MySQL ODBC driver to ${{ env.LATEST_VERSION }}'
