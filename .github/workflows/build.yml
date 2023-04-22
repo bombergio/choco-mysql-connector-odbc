@@ -16,11 +16,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       - name: Choco pack
-        uses: crazy-max/ghaction-chocolatey@v1
+        uses: crazy-max/ghaction-chocolatey@v2
         with:
           args: pack
       - name: Upload package
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: package
           path: mysql.odbc.*.nupkg
@@ -30,10 +30,10 @@ jobs:
     runs-on: windows-latest
     steps:
       - name: Download package
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: package
       - name: test package
-        uses: crazy-max/ghaction-chocolatey@v1
+        uses: crazy-max/ghaction-chocolatey@v2
         with:
           args: install mysql.odbc -dv -s .
