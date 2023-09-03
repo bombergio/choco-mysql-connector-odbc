@@ -6,7 +6,6 @@ on:
       - master
     types:
       - closed
-  workflow_dispatch:
 
 jobs:
   pack:
@@ -34,7 +33,7 @@ jobs:
       - name: Choco push package
         uses: crazy-max/ghaction-chocolatey@v2
         with:
-          args: push "${{ env.PACKAGE_NAME }}" --source https://push.chocolatey.org/ --force
+          args: push "${{ env.PACKAGE_NAME }}" --source https://push.chocolatey.org/
       - name: Bump version and push tag
         id: tag_version
         uses: mathieudutour/github-tag-action@v6.1

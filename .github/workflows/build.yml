@@ -7,7 +7,6 @@ on:
       - '!master'
     tags-ignore:
       - "**"
-  workflow_dispatch:
 
 jobs:
   pack:
