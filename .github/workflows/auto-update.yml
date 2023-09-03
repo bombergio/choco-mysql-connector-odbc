@@ -25,14 +25,11 @@ jobs:
       - name: Calculate SHA256
         if: steps.getversion.outputs.info != env.LATEST_VERSION
         run: |
-          echo "WIN32SHA=$(curl -s ${URL}-${LATEST_VERSION}-win32.msi | sha256sum | cut -d' ' -f1)" >> $GITHUB_ENV
           echo "WIN64SHA=$(curl -s ${URL}-${LATEST_VERSION}-winx64.msi | sha256sum | cut -d' ' -f1)" >> $GITHUB_ENV
       - name: Update chocolateyinstall.ps1 file
         if: steps.getversion.outputs.info != env.LATEST_VERSION
         run: |
-          sed -i "s|\$url .*|\$url = '${{ env.URL }}-${{ env.LATEST_VERSION }}-win32.msi'|g" tools/chocolateyinstall.ps1
           sed -i "s|\$url64 .*|\$url64 = '${{ env.URL }}-${{ env.LATEST_VERSION }}-winx64.msi'|g" tools/chocolateyinstall.ps1
-          sed -i "s/ checksum .*/ checksum = '${{ env.WIN32SHA }}'/g" tools/chocolateyinstall.ps1
           sed -i "s/ checksum64 .*/ checksum64 = '${{ env.WIN64SHA }}'/g" tools/chocolateyinstall.ps1
           sed -i "s|version>.*<|version>${{ env.LATEST_VERSION }}<|g" mysql-odbc.nuspec
       - name: Create Pull Request
