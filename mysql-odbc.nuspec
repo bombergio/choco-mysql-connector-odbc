@@ -10,8 +10,8 @@
     <projectUrl>https://dev.mysql.com/downloads/connector/odbc</projectUrl>
     <iconUrl>https://cdn.jsdelivr.net/gh/bombergio/choco-mysql-connector-odbc/Mysql.png</iconUrl>
     <copyright>2024 Oracle</copyright>
-    <licenseUrl>https://dev.mysql.com/doc/connector-odbc/en/preface.html</licenseUrl>
-    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <licenseUrl>https://downloads.mysql.com/docs/licenses/connector-odbc-8.3-gpl-en.pdf</licenseUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <docsUrl>https://dev.mysql.com/doc/connector-odbc/en/index.html</docsUrl>
     <bugTrackerUrl>https://bugs.mysql.com/</bugTrackerUrl>
     <tags>mysql odbc x64</tags>
