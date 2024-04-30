@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>mysql.odbc</id>
-    <version>8.3.0</version>
+    <version>8.4.0</version>
     <packageSourceUrl>https://github.com/bombergio/choco-mysql-connector-odbc</packageSourceUrl>
     <owners>bombergio</owners>
     <title>MySQL Connector/ODBC Driver (Install)</title>
