@@ -1,6 +1,6 @@
 ﻿$ErrorActionPreference = 'Stop';
 $toolsDir = "$(Split-Path -parent $MyInvocation.MyCommand.Definition)"
-$url64 = 'https://cdn.mysql.com//Downloads/Connector-ODBC/9.1/mysql-connector-odbc-9.1.0-winx64.msi'
+$url64 = 'https://cdn.mysql.com//Downloads/Connector-ODBC/9.2/mysql-connector-odbc-9.2.0-winx64.msi'
 
 $packageArgs = @{
   packageName = $env:ChocolateyPackageName
@@ -10,7 +10,7 @@ $packageArgs = @{
 
   softwareName = 'mysql odbc driver *'
 
-  checksum64 = '22352f79a145434dff3fd53f7a180a6d6c2a637011452c79fb8717d19853f4e3'
+  checksum64 = '73a47c4a74e478ec12594eb6ca858dee94f5bc67f1458db7ab93e5f68d4f7eec'
   checksumType64 = 'sha256'
 
   silentArgs = "/qn"
