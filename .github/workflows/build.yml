@@ -20,7 +20,7 @@ jobs:
         with:
           args: pack
       - name: Upload package
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: package
           path: mysql.odbc.*.nupkg
@@ -30,7 +30,7 @@ jobs:
     runs-on: windows-latest
     steps:
       - name: Download package
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: package
       - name: test package
