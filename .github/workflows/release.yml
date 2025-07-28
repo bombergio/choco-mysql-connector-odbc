@@ -16,7 +16,7 @@ jobs:
         uses: actions/checkout@v3
       - name: Get branch name
         id: branch-name
-        uses: tj-actions/branch-names@v7.0.7
+        uses: tj-actions/branch-names@v9.0.0
       - name: Choco pack
         uses: crazy-max/ghaction-chocolatey@v2
         with:
